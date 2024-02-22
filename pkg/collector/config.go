@@ -6,11 +6,11 @@ import (
 
 )
 
-
 type ConfigExchange struct{
 	apiKey string
 	apiSecret string
 	url string
+	recv_window string
 }
 
 func (c *ConfigExchange) GetApiKey () string{
@@ -22,6 +22,10 @@ func (c *ConfigExchange) GetSecret () string{
 }
 
 func (c *ConfigExchange) GetUrl () string{
+	return c.url
+}
+
+func (c *ConfigExchange) GetRecvWindow () string{
 	return c.url
 }
 
@@ -47,6 +51,7 @@ func New(pathEnv string) (*Config, error){
 			apiKey: getEnv("api_key", ""),
 			apiSecret: getEnv("api_secret", ""),
 			url: getEnv("url", ""),
+			recv_window: getEnv("recv_window", ""),
 		},
 	}, nil
 }

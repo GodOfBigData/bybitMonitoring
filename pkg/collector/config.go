@@ -11,6 +11,8 @@ type ConfigExchange struct{
 	apiSecret string
 	url string
 	recv_window string
+	address string
+	topic string
 }
 
 func (c *ConfigExchange) GetApiKey () string{
@@ -26,7 +28,15 @@ func (c *ConfigExchange) GetUrl () string{
 }
 
 func (c *ConfigExchange) GetRecvWindow () string{
-	return c.url
+	return c.recv_window
+}
+
+func (c *ConfigExchange) GetAddress () string{
+	return c.address
+}
+
+func (c *ConfigExchange) GetTopic () string{
+	return c.topic
 }
 
 type Config struct{
@@ -52,6 +62,8 @@ func New(pathEnv string) (*Config, error){
 			apiSecret: getEnv("api_secret", ""),
 			url: getEnv("url", ""),
 			recv_window: getEnv("recv_window", ""),
+			address: getEnv("address", ""),
+			topic: getEnv("topic", ""),
 		},
 	}, nil
 }

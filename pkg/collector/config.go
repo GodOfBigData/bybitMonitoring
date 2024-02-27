@@ -2,68 +2,73 @@ package collector
 
 import (
 	"os"
-	"github.com/joho/godotenv"
 
+	"github.com/joho/godotenv"
 )
 
-type ConfigExchange struct{
-	apiKey string
-	apiSecret string
-	url string
+type ConfigExchange struct {
+	apiKey      string
+	apiSecret   string
+	url         string
 	recv_window string
-	address string
-	topic string
+	address     string
+	topic       string
+	symbol      string
 }
 
-func (c *ConfigExchange) GetApiKey () string{
+func (c *ConfigExchange) GetApiKey() string {
 	return c.apiKey
 }
 
-func (c *ConfigExchange) GetSecret () string{
+func (c *ConfigExchange) GetSecret() string {
 	return c.apiSecret
 }
 
-func (c *ConfigExchange) GetUrl () string{
+func (c *ConfigExchange) GetUrl() string {
 	return c.url
 }
 
-func (c *ConfigExchange) GetRecvWindow () string{
+func (c *ConfigExchange) GetRecvWindow() string {
 	return c.recv_window
 }
 
-func (c *ConfigExchange) GetAddress () string{
+func (c *ConfigExchange) GetAddress() string {
 	return c.address
 }
 
-func (c *ConfigExchange) GetTopic () string{
+func (c *ConfigExchange) GetTopic() string {
 	return c.topic
 }
 
-type Config struct{
+func (c *ConfigExchange) GetSymbol() string {
+	return c.symbol
+}
+
+type Config struct {
 	ConfigExchange ConfigExchange
 }
 
-
 func getEnv(key string, defaultVal string) string {
-    if value, exists := os.LookupEnv(key); exists {
-	return value
-    }
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
 
-    return defaultVal
+	return defaultVal
 }
 
-func New(pathEnv string) (*Config, error){
+func New(pathEnv string) (*Config, error) {
 	if err := godotenv.Load(pathEnv); err != nil {
-        return &Config{}, err
-    }
+		return &Config{}, err
+	}
 	return &Config{
 		ConfigExchange: ConfigExchange{
-			apiKey: getEnv("api_key", ""),
-			apiSecret: getEnv("api_secret", ""),
-			url: getEnv("url", ""),
+			apiKey:      getEnv("api_key", ""),
+			apiSecret:   getEnv("api_secret", ""),
+			url:         getEnv("url", ""),
 			recv_window: getEnv("recv_window", ""),
-			address: getEnv("address", ""),
-			topic: getEnv("topic", ""),
+			address:     getEnv("address", ""),
+			topic:       getEnv("topic", ""),
+			symbol:      getEnv("symbol", ""),
 		},
 	}, nil
 }
